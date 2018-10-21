@@ -1,4 +1,4 @@
-# oak8x
+# oak8x - oak - thunder
 A fully open source Asterisk FXO/S module which supports up to 8 channels and based on Raspberry Pi 
 
 # OAK8X Manual
@@ -90,7 +90,7 @@ dtparam=i2c_arm=on
 ```
 
 ### Compile the dahdi
-Get the source code from https://github.com/lixinswitchpi/oak.git
+Get the source code from https://github.com/antonatosn/switchpi-thunder-oak.git
 ```shell
 cd /usr/src/dahdi-linux
 make
@@ -105,6 +105,39 @@ install required packages
 apt install libncurses5-dev uuid-dev libjansson-dev libxml2-dev libsqlite3-dev openssl libssl-dev build-essential
 ```
 Download the asterisk-13.20.0 and recompile it, remember to check up the chan-dahdi
+
+Find the dahdi modules in /lib/modules
+and make symlink if the modules are not place in the current kernel. 
+(eg. modules are placed in kernel version 4.14.71-v7+ but you are using 4.14.50-v7+)
+
+Run depmod -a to refresh modprobe list
+```shell
+depmod -a
+```
+
+### Configuring dahdi
+edit /etc/init.d/dahdi
+```shell
+load_modules() {
+        # Some systems, e.g. Debian Lenny, add here -b, which will break
+        # loading of modules blacklisted in modprobe.d/*
+        unset MODPROBE_OPTIONS
+        modules=`sed -e 's/#.*$//' $DAHDI_MODULES_FILE 2>/dev/null`
+        #if [ "$modules" = '' ]; then
+                # what?
+        #fi
+        echo "Loading DAHDI hardware modules:"
+		// add the bellow
+        modprobe -r pidma
+        modprobe dahdi
+        modprobe pidma
+```
+
+edit /etc/modprobe.d/dahdi.conf
+```
+options pitdm vpmnlptype=4 vpmnlpthresh=24 vpmnlpmaxsupp=24
+```
+
 
 ### The detailed manual
 Please check out the detailed manual in https://switchpi.com/2018/08/29/manual-of-install-oak8x-module/
