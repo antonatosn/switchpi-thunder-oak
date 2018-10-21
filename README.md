@@ -93,8 +93,8 @@ dtparam=i2c_arm=on
 Get the source code from https://github.com/lixinswitchpi/oak.git
 ```shell
 cd /usr/src/dahdi-linux
-make
-make install
+make KSRC=~/linux
+make KSRC=~/linux install
 ```
 
 ### Compile the dahdi-tools
