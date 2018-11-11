@@ -133,12 +133,6 @@ load_modules() {
         modprobe pidma
 ```
 
-edit /etc/modprobe.d/dahdi.conf
-```
-options pitdm vpmnlptype=4 vpmnlpthresh=24 vpmnlpmaxsupp=24
-```
-
-
 ### The detailed manual
 Please check out the detailed manual in https://switchpi.com/2018/08/29/manual-of-install-oak8x-module/
 

@@ -479,7 +479,7 @@ void setup_i2s(void)
     udelay(100);
     *(i2s_registers+TXC_A) = 1<<31 | 1<<30  | 8<<16  ;
     *(i2s_registers+RXC_A) = 1<<31 | 1<<30  | 8<<16  ;
-    *(i2s_registers+MODE_A) = 1<< 23 | 255 <<10 | 1 ;
+    *(i2s_registers+MODE_A) = 1<< 23 | 511 <<10 | 1 ;
     *(i2s_registers+CS_A) |= 1<<25;
     udelay(50);
     *(i2s_registers+CS_A) |= 1<<3 |1<<4 ; 
